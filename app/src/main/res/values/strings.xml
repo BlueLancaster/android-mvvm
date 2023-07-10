@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MVVM</string>
+    <string name="_1_100">請輸入1~100的數字</string>
+    <string name="guess">Guess</string>
+    <string name="editTextNum">ex:64</string>
+</resources>
