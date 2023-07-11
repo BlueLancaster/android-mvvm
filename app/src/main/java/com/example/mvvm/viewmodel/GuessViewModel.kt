@@ -8,18 +8,43 @@ class GuessViewModel():ViewModel()
 {
     val message = MutableLiveData<String>()
     val times = MutableLiveData<Int>()
+    val resetState = MutableLiveData<Boolean>(false)
     private var answer = Random.nextInt(100)+1
     private var counter = 0
 
+    fun buttonClicked(num: Int?)
+    {
+        if (resetState.value==false)
+        {
+            num?.let { guess(num.toInt()) }
+        }
+        else
+            reset()
+    }
+
     fun guess(num:Int)
     {
-        message.value = when(num-answer)
+        if (resetState.value==false)
         {
-            0 -> "答對了!"
-            in 1..100 -> "再小一點"
-            else -> "大一點"
+            message.value = when(num-answer)
+            {
+                0 -> {resetState.value = true
+                    "答對了!"}
+                in 1..100 -> "再小一點"
+                else -> "大一點"
+            }
+            counter++
+
         }
-        counter++
+        times.value = counter
+    }
+
+    fun reset()
+    {
+        counter = 0
+        answer = Random.nextInt(100)+1
+        message.value = "重新開始!"
+        resetState.value = false
         times.value = counter
     }
 }
